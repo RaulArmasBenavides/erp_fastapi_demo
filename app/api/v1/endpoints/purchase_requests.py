@@ -2,6 +2,7 @@
 from typing import List
 
 from fastapi import APIRouter, Depends
+from app.core.interfaces.i_purchase_request_service import IPurchaseRequestService
 from dependency_injector.wiring import Provide, inject
 
 from app.core.container import Container
@@ -18,7 +19,7 @@ router = APIRouter(
 @router.get("/", response_model=List[PurchaseRequestModel])
 @inject
 def get_purchase_requests(
-    supplier_id: int | None = None,
+    supplier_id: int,
     service: IPurchaseRequestService = Depends(Provide[Container.purchase_request_service]),
 ):
     # Si pasas supplier_id, filtra; si no, lista todo

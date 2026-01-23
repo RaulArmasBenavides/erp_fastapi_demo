@@ -12,10 +12,14 @@ router = APIRouter(
     tags=["suppliers"],
 )
 
+
 @router.get("/", response_model=List[SupplierModel])
 @inject
-def get_suppliers(service: ISupplierService = Depends(Provide[Container.supplier_service])):
+def get_suppliers(
+    service: ISupplierService = Depends(Provide[Container.supplier_service]),
+):
     return service.view_suppliers()
+
 
 @router.post("/", response_model=SupplierModel)
 @inject
@@ -24,6 +28,7 @@ def create_supplier(
     service: ISupplierService = Depends(Provide[Container.supplier_service]),
 ):
     return service.add_supplier(body)
+
 
 @router.delete("/{supplier_id}")
 @inject

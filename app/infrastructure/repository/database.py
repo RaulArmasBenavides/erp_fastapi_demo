@@ -18,14 +18,20 @@ class ORMBase:
 
 
 class Database:
-    def __init__(self, db_url: str) -> None:
-        self._engine = create_engine(db_url, echo=True)
+    def __init__(self, db_url: str, *, echo: bool = False) -> None:
+        self._engine = create_engine(
+            db_url,
+            echo=echo,
+            pool_pre_ping=True,
+            future=True,
+        )
         self._session_factory = orm.scoped_session(
             orm.sessionmaker(
+                bind=self._engine,
                 autocommit=False,
                 autoflush=False,
-                bind=self._engine,
-            ),
+                expire_on_commit=False,
+            )
         )
 
     def create_database(self) -> None:
@@ -36,6 +42,7 @@ class Database:
         session: Session = self._session_factory()
         try:
             yield session
+            # session.commit()  opcional: si quieres commit automático
         except Exception:
             session.rollback()
             raise

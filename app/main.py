@@ -7,9 +7,7 @@ from app.api.v1.routes import routers as v1_routers
 from app.core.container import Container
 from app.core.models.config import configs
 from app.infrastructure.schema.entry_schema import EntrySchema
-from app.infrastructure.schema.db import db_proxy
-
-
+ 
 @singleton
 class AppCreator:
     def __init__(self):
@@ -41,15 +39,12 @@ class AppCreator:
         @self.app.on_event("startup")
         def _startup() -> None:
             db = self.container.db()
-            db.connect(reuse_if_open=True)
-            db_proxy.initialize(db)
-            db.create_tables([EntrySchema])
+            db.create_database()  # crea tablas con SQLAlchemy (ORMBase.metadata.create_all)
 
         @self.app.on_event("shutdown")
         def _shutdown() -> None:
-            db = self.container.db()
-            if not db.is_closed():
-                db.close()
+            # No necesitas cerrar nada manualmente en SQLAlchemy aquí.
+            pass
 
 
 app_creator = AppCreator()
