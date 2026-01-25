@@ -14,10 +14,10 @@ class Configs(BaseSettings):
     API: str = "/api"
     API_V1_STR: str = "/api/v1"
     API_V2_STR: str = "/api/v2"
-    PROJECT_NAME: str = "fca-api"
+    PROJECT_NAME: str = "stracon-supplier-api"
     ENV_DATABASE_MAPPER: dict = {
-        "prod": "fca",
-        "stage": "stage-fca",
+        "prod": "stracon",
+        "stage": "stage-stracon",
         "dev": "stracon_db",
         "test": "test-fca",
     }

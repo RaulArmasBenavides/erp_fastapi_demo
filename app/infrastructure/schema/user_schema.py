@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlmodel import SQLModel, Field
 
 
-class UserEntity(SQLModel, table=True):
+class UserSchema(SQLModel, table=True):
     __tablename__ = "users"
 
     id: Optional[int] = Field(default=None, primary_key=True)

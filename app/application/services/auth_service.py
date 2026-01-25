@@ -1,11 +1,13 @@
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
-import jwt
+from jose import jwt
 from passlib.context import CryptContext
 from app.core.models.config import configs
 
-from app.infrastructure.schema.user_schema import User
+from app.core.models.user import User
+from app.infrastructure.schema.auth_schema import SignIn, SignInResponse, SignUp
+ 
 
 
 class AuthError(Exception):

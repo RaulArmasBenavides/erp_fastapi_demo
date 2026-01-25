@@ -6,7 +6,6 @@ from starlette.middleware.cors import CORSMiddleware
 from app.api.v1.routes import routers as v1_routers
 from app.core.container import Container
 from app.core.models.config import configs
-from app.infrastructure.schema.entry_schema import EntrySchema
  
 @singleton
 class AppCreator:

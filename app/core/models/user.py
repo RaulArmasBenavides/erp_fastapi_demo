@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 @dataclass(frozen=True)
-class UserModel:
+class User:
     id: Optional[int]
     email: str
     name: Optional[str]
