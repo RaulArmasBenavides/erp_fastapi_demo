@@ -18,7 +18,7 @@ class Configs(BaseSettings):
     ENV_DATABASE_MAPPER: dict = {
         "prod": "fca",
         "stage": "stage-fca",
-        "dev": "dev-fca",
+        "dev": "stracon_db",
         "test": "test-fca",
     }
     DB_ENGINE_MAPPER: dict = {

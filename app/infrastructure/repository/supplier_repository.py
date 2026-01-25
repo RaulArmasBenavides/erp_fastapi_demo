@@ -1,7 +1,6 @@
 # app/infrastructure/repositories/supplier_repository.py
 from typing import List
 
-from app.core.interfaces.IEntryRepository import IEntryRepository  # NO: solo referencia; quítalo
 from app.core.models.supplier import SupplierModel
 from app.infrastructure.repository.database import Database
 from app.infrastructure.schema.supplier_schema import SupplierSchema
