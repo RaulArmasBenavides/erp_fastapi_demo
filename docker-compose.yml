@@ -1,13 +1,24 @@
-version: '3'
-services: 
-    api:
-        build: ./src/
-        volumes: 
-            - ./src/:/usr/src/app/
-        ports: 
-            - 8000:8000
-        environment:
-            DB_URI: "sqlite:////usr/src/app/tmp/api.db"
-            HOST: "0.0.0.0"
-            PORT: 8000
-            FLASK_DEBUG: 1
+version: "3.8"
+
+services:
+  db-stracon:
+    image: postgres:16
+    container_name: db-stracon
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: stracon_db
+      POSTGRES_USER: stracon_user
+      POSTGRES_PASSWORD: stracon_pass
+    ports:
+      # Si 5432 ya está ocupado en tu PC, cámbialo a "5433:5432"
+      - "5432:5432"
+    volumes:
+      - db_stracon_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stracon_user -d stracon_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  db_stracon_data:

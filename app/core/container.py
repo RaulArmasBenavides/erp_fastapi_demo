@@ -4,15 +4,13 @@ from app.infrastructure.repository.purchase_request_repository import (
     PurchaseRequestRepository,
 )
 from dependency_injector import containers, providers
-from app.application.services.EntryService import EntryService
 from app.core.models.config import configs
-from app.infrastructure.repository.EntryRepository import EntryRepository
 from app.infrastructure.schema.entry_schema import EntrySchema
 
 class Container(containers.DeclarativeContainer):
     wiring_config = containers.WiringConfiguration(
         modules=[
-            "app.api.v1.endpoints.entries",
+            "app.api.v1.endpoints.supplier",
             "app.api.v1.endpoints.purchase_requests",
             "app.core.dependencies",
         ]
