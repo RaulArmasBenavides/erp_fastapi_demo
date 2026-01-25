@@ -95,4 +95,14 @@ class SupplierRepository:
                 session.commit()
                 session.refresh(row)
 
-            return self._to_model(row)
+            return SupplierModel(
+                id=row.id,
+                name=row.name,
+                address=row.address,
+                phone=row.phone,
+                email=row.email,
+                photo=row.photo,
+                is_approved=row.is_approved,
+                approved_at=row.approved_at,
+                approved_by=row.approved_by,
+            )
