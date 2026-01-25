@@ -27,18 +27,23 @@ class UserRepository:
             return User(
                 id=row.id,
                 email=row.email,
-                full_name=getattr(row, "full_name", None),
-                is_active=getattr(row, "is_active", True),
-                hashed_password=getattr(row, "hashed_password", None),
+                name=row.name,
+                is_active=row.is_active,
+                role=row.role,
+                password_hash=row.password_hash,   # <- este es el hash real
+                created_at=row.created_at,
             )
 
     def create(self, user: User) -> User:
         with self._db.session() as session:
             row = UserSchema(
                 email=str(user.email).strip().lower(),
-                full_name=getattr(user, "full_name", None),
-                is_active=getattr(user, "is_active", True),
-                hashed_password=getattr(user, "hashed_password", None),
+                name=user.name,
+                is_active=user.is_active,
+                role=getattr(user, "role", None) or "Requester",
+                password_hash=user.password_hash,  # ✅ campo real
+                # user_token: si lo usas, setéalo aquí
+                # user_token=getattr(user, "user_token", None),
             )
 
             session.add(row)
@@ -48,7 +53,9 @@ class UserRepository:
             return User(
                 id=row.id,
                 email=row.email,
-                full_name=getattr(row, "full_name", None),
-                is_active=getattr(row, "is_active", True),
-                hashed_password=getattr(row, "hashed_password", None),
+                name=row.name,
+                is_active=row.is_active,
+                role=row.role,
+                password_hash=row.password_hash,
+                created_at=row.created_at,
             )

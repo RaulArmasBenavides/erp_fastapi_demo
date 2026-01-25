@@ -12,3 +12,6 @@ class SupplierModel(BaseModel):
     email: EmailStr
     photo: Optional[str] = None
     created_at: Optional[datetime] = None
+    is_approved: bool = False
+    approved_at: Optional[datetime] = None
+    approved_by: Optional[str] = None

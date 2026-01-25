@@ -1,4 +1,5 @@
 # app/api/v1/endpoints/auth.py
+from app.core.models.user import User
 from app.infrastructure.schema.auth_schema import SignIn, SignInResponse, SignUp
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -22,7 +23,7 @@ async def sign_in(
     except AuthError as e:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))
 
-@router.post("/sign-up", response_model=UserSchema)
+@router.post("/sign-up", response_model=User)
 @inject
 async def sign_up(
     user_info: SignUp,

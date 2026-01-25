@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from app.application.services.base_service import BaseService
 
 from app.core.interfaces.i_supplier_repository import ISupplierRepository
@@ -15,6 +15,11 @@ class SupplierService(BaseService, ISupplierService):
 
     def view_suppliers(self) -> List[SupplierModel]:
         return self._supplier_repository.view_suppliers()
+
+    def approve_supplier(
+        self, supplier_id: int, approved_by: str
+    ) -> Optional[SupplierModel]:
+        return self._supplier_repository.approve_supplier(supplier_id, approved_by)
 
     def delete_supplier(self, supplier_id: int) -> None:
         self._supplier_repository.delete_supplier(supplier_id)

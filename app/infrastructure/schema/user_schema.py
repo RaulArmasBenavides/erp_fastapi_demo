@@ -1,26 +1,25 @@
-from typing import Optional
 from datetime import datetime
-from sqlmodel import SQLModel, Field
+from typing import Optional
+
+from sqlalchemy import Boolean, Column, DateTime, Integer, String
+from app.infrastructure.repository.database import ORMBase
 
 
-class UserSchema(SQLModel, table=True):
+class UserSchema(ORMBase):
     __tablename__ = "users"
 
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id = Column(Integer, primary_key=True, index=True)
 
-    email: str = Field(index=True, unique=True, nullable=False)
+    email = Column(String(200), nullable=False, unique=True, index=True)
 
-    # persistencia: guarda hash, no password plano
-    password_hash: str = Field(nullable=False)
+    password_hash = Column(String(300), nullable=False)
 
-    # opcional si realmente lo usas
-    user_token: Optional[str] = Field(default=None, unique=True, index=True)
+    user_token = Column(String(300), nullable=True, unique=True, index=True)
 
-    name: Optional[str] = Field(default=None, nullable=True)
+    name = Column(String(200), nullable=True)
 
-    is_active: bool = Field(default=True, nullable=False)
+    is_active = Column(Boolean, nullable=False, default=True)
 
-    # reemplaza is_superuser
-    role: str = Field(default="user", index=True, nullable=False)
+    role = Column(String(50), nullable=False, default="Requester", index=True)
 
-    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)

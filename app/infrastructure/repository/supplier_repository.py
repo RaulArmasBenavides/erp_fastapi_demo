@@ -1,10 +1,11 @@
 # app/infrastructure/repositories/supplier_repository.py
-from typing import List
+from datetime import datetime
+from typing import List, Optional
 
 from app.core.models.supplier import SupplierModel
 from app.infrastructure.repository.database import Database
 from app.infrastructure.schema.supplier_schema import SupplierSchema
- 
+
 
 class SupplierRepository:
     def __init__(self, db: Database):
@@ -18,6 +19,9 @@ class SupplierRepository:
                 phone=supplier.phone,
                 email=str(supplier.email),
                 photo=supplier.photo,
+                is_approved=getattr(supplier, "is_approved", False),
+                approved_at=getattr(supplier, "approved_at", None),
+                approved_by=getattr(supplier, "approved_by", None),
             )
             session.add(row)
             session.commit()
@@ -30,11 +34,16 @@ class SupplierRepository:
                 phone=row.phone,
                 email=row.email,
                 photo=row.photo,
+                is_approved=row.is_approved,
+                approved_at=row.approved_at,
+                approved_by=row.approved_by,
             )
 
     def view_suppliers(self) -> List[SupplierModel]:
         with self._db.session() as session:
-            rows = session.query(SupplierSchema).order_by(SupplierSchema.id.desc()).all()
+            rows = (
+                session.query(SupplierSchema).order_by(SupplierSchema.id.desc()).all()
+            )
 
             return [
                 SupplierModel(
@@ -44,6 +53,9 @@ class SupplierRepository:
                     phone=r.phone,
                     email=r.email,
                     photo=r.photo,
+                    is_approved=r.is_approved,
+                    approved_at=r.approved_at,
+                    approved_by=r.approved_by,
                 )
                 for r in rows
             ]
@@ -56,3 +68,31 @@ class SupplierRepository:
 
             session.delete(row)
             session.commit()
+
+    def approve_supplier(
+        self, supplier_id: int, approved_by: str
+    ) -> Optional[SupplierModel]:
+        """
+        Marca el supplier como aprobado.
+        - Si no existe: None
+        - Si ya está aprobado: retorna el estado actual (idempotente)
+        """
+        approved_by = (approved_by or "").strip()
+        if not approved_by:
+            raise ValueError("approved_by es requerido")
+
+        with self._db.session() as session:
+            row = session.get(SupplierSchema, supplier_id)
+            if row is None:
+                return None
+
+            # Idempotente: si ya está aprobado, solo devuelve
+            if not getattr(row, "is_approved", False):
+                row.is_approved = True
+                row.approved_at = datetime.utcnow()
+                row.approved_by = approved_by
+                session.add(row)
+                session.commit()
+                session.refresh(row)
+
+            return self._to_model(row)

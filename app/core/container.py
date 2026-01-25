@@ -10,11 +10,15 @@ from app.infrastructure.repository.user_repository import UserRepository
 from dependency_injector import containers, providers
 from app.core.models.config import configs
 
+
 class Container(containers.DeclarativeContainer):
     wiring_config = containers.WiringConfiguration(
         modules=[
+            "app.api.security.current_user",
+            "app.api.security.roles",
             "app.api.v1.endpoints.supplier",
             "app.api.v1.endpoints.purchase_requests",
+            "app.api.v1.endpoints.auth",
             "app.core.dependencies",
         ]
     )
@@ -22,7 +26,9 @@ class Container(containers.DeclarativeContainer):
     # for sqlachemy
     db = providers.Singleton(Database, db_url=configs.DATABASE_URI)
     supplier_repository = providers.Factory(SupplierRepository, db=db)
-    supplier_service = providers.Factory(SupplierService, supplier_repository=supplier_repository)
+    supplier_service = providers.Factory(
+        SupplierService, supplier_repository=supplier_repository
+    )
     purchase_repository = providers.Factory(PurchaseRequestRepository, db=db)
     purchase_request_service = providers.Factory(
         PurchaseRequestService, purchase_repository=purchase_repository

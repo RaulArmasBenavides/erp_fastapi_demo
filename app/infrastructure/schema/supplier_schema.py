@@ -1,6 +1,6 @@
 # app/infrastructure/schema/supplier_schema.py
 from app.infrastructure.repository.database import ORMBase
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Boolean, Column, DateTime, Integer, String
  
 class SupplierSchema(ORMBase):
     __tablename__ = "suppliers"
@@ -11,3 +11,6 @@ class SupplierSchema(ORMBase):
     phone = Column(String(50), nullable=False)
     email = Column(String(200), nullable=False)
     photo = Column(String(300), nullable=True)  # GUID / public_id Cloudinary
+    is_approved = Column(Boolean, nullable=False, default=False)
+    approved_at = Column(DateTime, nullable=True)
+    approved_by = Column(String(200), nullable=True)
