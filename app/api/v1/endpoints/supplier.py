@@ -30,7 +30,7 @@ def create_supplier(
     user: UserSchema = Depends(require_any_role("Requester", "Approver")),
     service: ISupplierService = Depends(Provide[Container.supplier_service]),
 ):
-    return service.add_supplier(body)
+    return service.add_supplier(body, created_by=user.email)
 
 
 @router.delete("/{supplier_id}")

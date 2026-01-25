@@ -10,8 +10,8 @@ class SupplierService(BaseService, ISupplierService):
     def __init__(self, supplier_repository: ISupplierRepository):
         self._supplier_repository = supplier_repository
 
-    def add_supplier(self, supplier: SupplierModel) -> SupplierModel:
-        return self._supplier_repository.add_supplier(supplier)
+    def add_supplier(self, supplier: SupplierModel,created_by: str) -> SupplierModel:
+        return self._supplier_repository.add_supplier(supplier,created_by)
 
     def view_suppliers(self) -> List[SupplierModel]:
         return self._supplier_repository.view_suppliers()

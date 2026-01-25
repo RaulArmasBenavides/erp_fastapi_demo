@@ -6,7 +6,9 @@ from app.core.models.supplier import SupplierModel
 
 class ISupplierRepository(ABC):
     @abstractmethod
-    def add_supplier(self, supplier: SupplierModel) -> SupplierModel: ...
+    def add_supplier(
+        self, supplier: SupplierModel, created_by: str
+    ) -> SupplierModel: ...
 
     @abstractmethod
     def view_suppliers(self) -> List[SupplierModel]: ...

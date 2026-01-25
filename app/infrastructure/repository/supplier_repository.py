@@ -11,7 +11,10 @@ class SupplierRepository:
     def __init__(self, db: Database):
         self._db = db
 
-    def add_supplier(self, supplier: SupplierModel) -> SupplierModel:
+    def add_supplier(self, supplier: SupplierModel, created_by: str) -> SupplierModel:
+        created_by = (created_by or "").strip()
+        if not created_by:
+            raise ValueError("created_by es requerido")
         with self._db.session() as session:
             row = SupplierSchema(
                 name=supplier.name,
@@ -19,6 +22,8 @@ class SupplierRepository:
                 phone=supplier.phone,
                 email=str(supplier.email),
                 photo=supplier.photo,
+                created_at=datetime.utcnow(),
+                created_by=created_by,
                 is_approved=getattr(supplier, "is_approved", False),
                 approved_at=getattr(supplier, "approved_at", None),
                 approved_by=getattr(supplier, "approved_by", None),

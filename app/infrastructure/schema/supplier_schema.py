@@ -11,6 +11,8 @@ class SupplierSchema(ORMBase):
     phone = Column(String(50), nullable=False)
     email = Column(String(200), nullable=False)
     photo = Column(String(300), nullable=True)  # GUID / public_id Cloudinary
+    created_at = Column(DateTime, nullable=True)
+    created_by = Column(String(200), nullable=True)
     is_approved = Column(Boolean, nullable=False, default=False)
     approved_at = Column(DateTime, nullable=True)
     approved_by = Column(String(200), nullable=True)
