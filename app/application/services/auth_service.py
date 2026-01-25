@@ -7,7 +7,6 @@ from app.core.models.config import configs
 
 from app.core.models.user import User
 from app.infrastructure.schema.auth_schema import SignIn, SignInResponse, SignUp
- 
 
 
 class AuthError(Exception):
@@ -16,6 +15,7 @@ class AuthError(Exception):
 
 class AuthService:
     """Casos de uso de autenticación: sign-up y sign-in."""
+
     def __init__(self, user_repository):
         # user_repository debe exponer: get_by_email(email) -> Optional[User], create(user: User) -> User
         self._users = user_repository
@@ -25,26 +25,22 @@ class AuthService:
 
     # --------- API pública ---------
     def sign_up(self, payload: SignUp) -> User:
-        # 1) existe?
         if self._users.get_by_email(payload.email):
             raise AuthError("Email ya registrado")
 
-        # 2) hash pass
         hashed = self._hash_password(payload.password)
 
-        # 3) construir User DTO (ajusta campos según tu User)
         new_user = User(
-            id=0,                      # el repo debe asignar ID
+            id=None,
             email=payload.email,
-            full_name=getattr(payload, "full_name", None),
+            name=getattr(payload, "full_name", None),  # mapeo simple
             is_active=True,
-            hashed_password=hashed,    # si tu User no lo expone, quítalo y mapea en el repo
+            role="Requester",  # default
+            password_hash=hashed,
+            created_at=None,
         )
 
-        # 4) persistir
-        created = self._users.create(new_user)
-        # Opcional: no retornar hashed_password al cliente; asegura que tu User (Pydantic) lo oculte
-        return created
+        return self._users.create(new_user)
 
     def sign_in(self, payload: SignIn) -> SignInResponse:
         # 1) buscar usuario
@@ -53,7 +49,7 @@ class AuthService:
             raise AuthError("Credenciales inválidas")
 
         # 2) validar pass
-        hashed = getattr(user, "hashed_password", None)
+        hashed = getattr(user, "password_hash", None)
         if not hashed or not self._verify_password(payload.password, hashed):
             raise AuthError("Credenciales inválidas")
 
@@ -61,11 +57,7 @@ class AuthService:
         token = self._create_access_token(sub=str(user.id), email=user.email)
 
         # 4) armar respuesta
-        return SignInResponse(
-            access_token=token,
-            token_type="bearer",
-            user=user
-        )
+        return SignInResponse(access_token=token, token_type="bearer", user=user)
 
     # --------- Helpers internos ---------
     def _hash_password(self, plain: str) -> str:

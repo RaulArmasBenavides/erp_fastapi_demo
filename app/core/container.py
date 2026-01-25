@@ -34,4 +34,4 @@ class Container(containers.DeclarativeContainer):
         PurchaseRequestService, purchase_repository=purchase_repository
     )
     user_repository = providers.Factory(UserRepository, db=db)
-    auth_service = providers.Factory(AuthService, user_repository=UserRepository)
+    auth_service = providers.Factory(AuthService, user_repository=user_repository)
