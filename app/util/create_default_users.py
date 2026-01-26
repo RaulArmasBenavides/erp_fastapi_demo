@@ -27,6 +27,14 @@ def create_default_users(database):  # Recibe la instancia de Database
                 "is_active": True,
             },
             {
+                "email": "admin@stracon.com",
+                "name": "Admin Stracon",
+                "password": "Dsr1#tec",
+                "role": "Approver",
+                "is_active": True,
+            },,
+            
+            {
                 "email": "raularmasbx@gmail.com",
                 "name": "Raul Armas",
                 "password": "Dsr1#tec",
