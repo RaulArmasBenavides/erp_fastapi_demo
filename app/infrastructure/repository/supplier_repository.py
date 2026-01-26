@@ -60,8 +60,8 @@ class SupplierRepository(ISupplierRepository):
                     email=r.email,
                     photo=r.photo,
                     is_approved=r.is_approved,
-                    created_by = r.created_by,
-                    created_at = r.created_at,
+                    created_by=r.created_by,
+                    created_at=r.created_at,
                     approved_at=r.approved_at,
                     approved_by=r.approved_by,
                 )
@@ -111,6 +111,58 @@ class SupplierRepository(ISupplierRepository):
                 email=row.email,
                 photo=row.photo,
                 is_approved=row.is_approved,
+                approved_at=row.approved_at,
+                approved_by=row.approved_by,
+            )
+
+    def get_supplier(self, supplier_id: int) -> Optional[SupplierModel]:
+        with self._db.session() as session:
+            row = session.get(SupplierSchema, supplier_id)
+            if row is None:
+                return None
+
+            return SupplierModel(
+                id=row.id,
+                name=row.name,
+                address=row.address,
+                phone=row.phone,
+                email=row.email,
+                photo=row.photo,
+                is_approved=row.is_approved,
+                created_by=row.created_by,
+                created_at=row.created_at,
+                approved_at=row.approved_at,
+                approved_by=row.approved_by,
+            )
+
+    def update_supplier(
+        self, supplier_id: int, update_data: dict
+    ) -> Optional[SupplierModel]:
+        with self._db.session() as session:
+            row = session.get(SupplierSchema, supplier_id)
+            if row is None:
+                return None
+
+            # Actualizar los campos proporcionados
+            for key, value in update_data.items():
+                if hasattr(row, key):
+                    setattr(row, key, value)
+
+ 
+            session.add(row)
+            session.commit()
+            session.refresh(row)
+
+            return SupplierModel(
+                id=row.id,
+                name=row.name,
+                address=row.address,
+                phone=row.phone,
+                email=row.email,
+                photo=row.photo,
+                is_approved=row.is_approved,
+                created_by=row.created_by,
+                created_at=row.created_at,
                 approved_at=row.approved_at,
                 approved_by=row.approved_by,
             )

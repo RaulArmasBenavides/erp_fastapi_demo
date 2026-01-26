@@ -61,6 +61,41 @@ async def create_supplier(
     )
 
 
+@router.put("/{supplier_id}", response_model=SupplierModel)
+@inject
+async def update_supplier(
+    supplier_id: int,
+    name: Optional[str] = Form(None),
+    address: Optional[str] = Form(None),
+    phone: Optional[str] = Form(None),
+    email: Optional[str] = Form(None),
+    photo: Optional[UploadFile] = File(None),
+    user: UserSchema = Depends(require_any_role("Requester", "Approver")),
+    service: SupplierService = Depends(Provide[Container.supplier_service]),
+):
+    """
+    Actualiza un proveedor existente, incluyendo foto opcional
+    """
+    # Crear diccionario con los campos a actualizar (solo los que no son None)
+    update_data = {}
+    if name is not None:
+        update_data["name"] = name
+    if address is not None:
+        update_data["address"] = address
+    if phone is not None:
+        update_data["phone"] = phone
+    if email is not None:
+        update_data["email"] = email
+    
+    return await service.update_supplier_with_photo(
+        supplier_id=supplier_id,
+        update_data=update_data,
+        photo=photo,
+        updated_by=user.email
+    )
+
+
+
 @router.delete("/{supplier_id}")
 @inject
 def delete_supplier(

@@ -16,3 +16,6 @@ class ISupplierService(ABC):
     @abstractmethod
     def approve_supplier(self, supplier_id: int, approved_by: str) -> Optional[SupplierModel]:
         pass
+    @abstractmethod
+    def get_supplier(self, supplier_id: int) -> Optional[SupplierModel]:
+        pass
