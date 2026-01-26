@@ -1,4 +1,5 @@
 # main.py
+ 
 from app.util.class_object import singleton
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -6,6 +7,7 @@ from starlette.middleware.cors import CORSMiddleware
 from app.api.v1.routes import routers as v1_routers
 from app.core.container import Container
 from app.core.models.config import configs
+from app.util.create_default_users import create_default_users
  
 @singleton
 class AppCreator:
@@ -39,6 +41,7 @@ class AppCreator:
         def _startup() -> None:
             db = self.container.db()
             db.create_database()  # crea tablas con SQLAlchemy (ORMBase.metadata.create_all)
+            create_default_users(db) 
 
         @self.app.on_event("shutdown")
         def _shutdown() -> None:
