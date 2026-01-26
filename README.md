@@ -1,3 +1,11 @@
+Ejecutar docker-compose
+
+
+docker compose up -d --build
+
+
+
+
 
 # 1) Usa la versión de Python del proyecto (pyenv)
 pyenv local 3.9.13
@@ -13,14 +21,11 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 
 
+
 API rest
-uvicorn app.main:app --reload
 python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 
 
 
 
 
-pip install mypy pyright ruff
-
-pip install cloudinary pyngrok python-multipart
