@@ -2,12 +2,13 @@
 from datetime import datetime
 from typing import List, Optional
 
+from app.core.interfaces.i_supplier_repository import ISupplierRepository
 from app.core.models.supplier import SupplierModel
 from app.infrastructure.repository.database import Database
 from app.infrastructure.schema.supplier_schema import SupplierSchema
 
 
-class SupplierRepository:
+class SupplierRepository(ISupplierRepository):
     def __init__(self, db: Database):
         self._db = db
 
@@ -59,6 +60,8 @@ class SupplierRepository:
                     email=r.email,
                     photo=r.photo,
                     is_approved=r.is_approved,
+                    created_by = r.created_by,
+                    created_at = r.created_at,
                     approved_at=r.approved_at,
                     approved_by=r.approved_by,
                 )

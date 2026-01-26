@@ -1,6 +1,7 @@
 from app.application.services.auth_service import AuthService
 from app.application.services.purchase_request_service import PurchaseRequestService
 from app.application.services.supplier_service import SupplierService
+from app.application.services.user_admin_service import UserAdminService
 from app.infrastructure.repository.database import Database
 from app.infrastructure.repository.purchase_request_repository import (
     PurchaseRequestRepository,
@@ -19,6 +20,7 @@ class Container(containers.DeclarativeContainer):
             "app.api.v1.endpoints.supplier",
             "app.api.v1.endpoints.purchase_requests",
             "app.api.v1.endpoints.auth",
+            "app.api.v1.endpoints.users",
             "app.core.dependencies",
         ]
     )
@@ -35,3 +37,4 @@ class Container(containers.DeclarativeContainer):
     )
     user_repository = providers.Factory(UserRepository, db=db)
     auth_service = providers.Factory(AuthService, user_repository=user_repository)
+    user_admin_service = providers.Factory(UserAdminService, repo=user_repository)

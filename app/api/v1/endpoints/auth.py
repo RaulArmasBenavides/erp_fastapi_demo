@@ -12,7 +12,7 @@ from app.infrastructure.schema.user_schema import UserSchema
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-@router.post("/sign-in", response_model=SignInResponse)
+@router.post("/login", response_model=SignInResponse)
 @inject
 async def sign_in(
     user_info: SignIn,

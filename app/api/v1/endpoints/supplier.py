@@ -1,6 +1,6 @@
 # app/presentation/routes/supplier_routes.py
 from typing import List
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from app.api.security.roles import require_any_role
 from app.core.interfaces.i_supplier_service import ISupplierService
 from app.infrastructure.schema.user_schema import UserSchema
