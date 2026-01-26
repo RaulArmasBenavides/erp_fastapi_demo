@@ -7,10 +7,12 @@ from dependency_injector.wiring import Provide, inject
 
 from app.api.security.roles import require_any_role
 from app.core.container import Container
- 
- 
-from app.infrastructure.schema.user_schema import UserSchema  # (tu current_user devuelve esto o tu User Pydantic)
- 
+
+
+from app.infrastructure.schema.user_schema import (
+    UserSchema,
+)  # (tu current_user devuelve esto o tu User Pydantic)
+
 
 router = APIRouter(prefix="/users", tags=["users-admin"])
 
@@ -46,7 +48,7 @@ def create_user(
     service: UserAdminService = Depends(Provide[Container.user_admin_service]),
 ):
     created = service.create_user(body)
-    return User.from_domain(created)
+    return created
 
 
 @router.patch("/{user_id}", response_model=User)
@@ -62,7 +64,6 @@ def patch_user(
         raise HTTPException(status_code=404, detail="User not found")
     return User.from_domain(updated)
 
- 
 
 @router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
 @inject

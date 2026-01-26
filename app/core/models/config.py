@@ -1,8 +1,9 @@
 import os
-from typing import List
+from typing import List, Optional
 
 from dotenv import load_dotenv
 from pydantic import BaseSettings
+
 load_dotenv()
 
 ENV: str = ""
@@ -26,7 +27,9 @@ class Configs(BaseSettings):
         "mysql": "mysql+pymysql",
     }
 
-    PROJECT_ROOT: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    PROJECT_ROOT: str = os.path.dirname(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    )
     # SQLITE_PATH: str = os.getenv("SQLITE_PATH", os.path.join(PROJECT_ROOT, "data", "diary.db"))
     # date
     DATETIME_FORMAT: str = "%Y-%m-%dT%H:%M:%S"
@@ -34,34 +37,72 @@ class Configs(BaseSettings):
 
     # auth
     SECRET_KEY: str = os.getenv("SECRET_KEY", "")
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 30  # 60 minutes * 24 hours * 30 days = 30 days
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = (
+        60 * 24 * 30
+    )  # 60 minutes * 24 hours * 30 days = 30 days
 
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = ["*"]
 
     # database
     DB: str = os.getenv("DB", "postgresql")
-    DB_USER: str = str(os.getenv("DB_USER")) 
-    DB_PASSWORD: str = str(os.getenv("DB_PASSWORD")) 
+    DB_USER: str = str(os.getenv("DB_USER"))
+    DB_PASSWORD: str = str(os.getenv("DB_PASSWORD"))
     DB_HOST: str = str(os.getenv("DB_HOST"))
     DB_PORT: str = os.getenv("DB_PORT", "3306")
     DB_ENGINE: str = DB_ENGINE_MAPPER.get(DB, "postgresql")
 
-    DATABASE_URI_FORMAT: str = "{db_engine}://{user}:{password}@{host}:{port}/{database}"
+    DATABASE_URI_FORMAT: str = (
+        "{db_engine}://{user}:{password}@{host}:{port}/{database}"
+    )
 
-    DATABASE_URI:str = "{db_engine}://{user}:{password}@{host}:{port}/{database}".format(
-        db_engine=DB_ENGINE,
-        user=DB_USER,
-        password=DB_PASSWORD,
-        host=DB_HOST,
-        port=DB_PORT,
-        database=ENV_DATABASE_MAPPER[ENV],
+    DATABASE_URI: str = (
+        "{db_engine}://{user}:{password}@{host}:{port}/{database}".format(
+            db_engine=DB_ENGINE,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            host=DB_HOST,
+            port=DB_PORT,
+            database=ENV_DATABASE_MAPPER[ENV],
+        )
     )
 
     # find query
-    PAGE:int = 1
-    PAGE_SIZE:int = 20
-    ORDERING:str = "-id"
+    PAGE: int = 1
+    PAGE_SIZE: int = 20
+    ORDERING: str = "-id"
+    # Cloudinary Configuration
+    CLOUDINARY_CLOUD_NAME: str = os.getenv("CLOUDINARY_CLOUD_NAME", "")
+    CLOUDINARY_API_KEY: str = os.getenv("CLOUDINARY_API_KEY", "")
+    CLOUDINARY_API_SECRET: str = os.getenv("CLOUDINARY_API_SECRET", "")
+    CLOUDINARY_DEFAULT_FOLDER: str = os.getenv("CLOUDINARY_DEFAULT_FOLDER", "stracon")
+    CLOUDINARY_LOGO_PUBLIC_ID: Optional[str] = os.getenv(
+        "CLOUDINARY_LOGO_PUBLIC_ID", None
+    )
+    CLOUDINARY_PROTECTED_RENTING_PUBLIC_ID: Optional[str] = os.getenv(
+        "CLOUDINARY_PROTECTED_RENTING_PUBLIC_ID", None
+    )
+    CLOUDINARY_PROTECTED_EMPLOYMENT_PUBLIC_ID: Optional[str] = os.getenv(
+        "CLOUDINARY_PROTECTED_EMPLOYMENT_PUBLIC_ID", None
+    )
+    CLOUDINARY_PROTECTED_SOCIAL_HELP_PUBLIC_ID: Optional[str] = os.getenv(
+        "CLOUDINARY_PROTECTED_SOCIAL_HELP_PUBLIC_ID", None
+    )
+
+    # File upload limits
+    MAX_FILE_SIZE_MB: int = int(os.getenv("MAX_FILE_SIZE_MB", "10"))  # 10MB default
+    ALLOWED_IMAGE_TYPES: List[str] = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+    ]
+
+    # Supplier specific folders
+    CLOUDINARY_SUPPLIERS_FOLDER: str = os.getenv(
+        "CLOUDINARY_SUPPLIERS_FOLDER", "suppliers"
+    )
+    CLOUDINARY_USERS_FOLDER: str = os.getenv("CLOUDINARY_USERS_FOLDER", "users")
 
     class Config:
         case_sensitive = True
