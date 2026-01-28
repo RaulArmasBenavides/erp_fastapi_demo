@@ -32,8 +32,7 @@ def create_default_users(database):  # Recibe la instancia de Database
                 "password": "Dsr1#tec",
                 "role": "Approver",
                 "is_active": True,
-            },,
-            
+            },
             {
                 "email": "raularmasbx@gmail.com",
                 "name": "Raul Armas",
