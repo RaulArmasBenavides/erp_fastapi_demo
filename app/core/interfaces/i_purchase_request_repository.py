@@ -4,8 +4,9 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import List
 
-from app.core.models.purchase_request import PurchaseRequestModel
+from app.domain.purchase_request import PurchaseRequestModel
 
+ 
 
 class IPurchaseRequestRepository(ABC):
     @abstractmethod

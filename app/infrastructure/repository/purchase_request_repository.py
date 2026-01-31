@@ -2,10 +2,10 @@
 from typing import List
  
 from app.core.interfaces.i_purchase_request_repository import IPurchaseRequestRepository
+from app.domain.purchase_request import PurchaseRequestModel
 from app.infrastructure.repository.database import Database
 from app.infrastructure.schema.purchase_request_schema import PurchaseRequestSchema
-from app.core.models.purchase_request import PurchaseRequestModel
-
+ 
 class PurchaseRequestRepository(IPurchaseRequestRepository):
     def __init__(self, db: Database):
         self._db = db

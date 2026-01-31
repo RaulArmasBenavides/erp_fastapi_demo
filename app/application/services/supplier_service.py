@@ -7,7 +7,7 @@ from app.application.services.base_service import BaseService
 from app.application.services.cloudinary_service import CloudinaryService
 from app.core.interfaces.i_supplier_repository import ISupplierRepository
 from app.core.interfaces.i_supplier_service import ISupplierService
-from app.core.models.supplier import SupplierModel
+from app.domain.supplier import SupplierModel
 from app.infrastructure.schema.supplier_schema import SupplierSchema
 
 

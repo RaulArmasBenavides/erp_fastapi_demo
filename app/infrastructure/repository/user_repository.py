@@ -1,7 +1,8 @@
 from typing import List, Optional
 
 from app.core.interfaces.i_user_repository import IUserRepository
-from app.core.models.user import User
+ 
+from app.domain.user import User
 from app.infrastructure.repository.database import Database
 
 from app.infrastructure.schema.user_schema import (

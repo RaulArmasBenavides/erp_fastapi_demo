@@ -9,7 +9,7 @@ from app.infrastructure.repository.purchase_request_repository import (
 from app.infrastructure.repository.supplier_repository import SupplierRepository
 from app.infrastructure.repository.user_repository import UserRepository
 from dependency_injector import containers, providers
-from app.core.models.config import configs
+from app.core.config import configs
 
 
 class Container(containers.DeclarativeContainer):
@@ -20,8 +20,7 @@ class Container(containers.DeclarativeContainer):
             "app.api.v1.endpoints.supplier",
             "app.api.v1.endpoints.purchase_requests",
             "app.api.v1.endpoints.auth",
-            "app.api.v1.endpoints.users",
-            "app.core.dependencies",
+            "app.api.v1.endpoints.users"
         ]
     )
 

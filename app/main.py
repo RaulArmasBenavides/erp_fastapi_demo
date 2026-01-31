@@ -6,7 +6,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from app.api.v1.routes import routers as v1_routers
 from app.core.container import Container
-from app.core.models.config import configs
+from app.core.config import configs
 from app.util.create_default_users import create_default_users
  
 @singleton

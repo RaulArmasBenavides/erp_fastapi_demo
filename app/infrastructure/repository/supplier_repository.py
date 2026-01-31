@@ -3,7 +3,8 @@ from datetime import datetime
 from typing import List, Optional
 
 from app.core.interfaces.i_supplier_repository import ISupplierRepository
-from app.core.models.supplier import SupplierModel
+ 
+from app.domain.supplier import SupplierModel
 from app.infrastructure.repository.database import Database
 from app.infrastructure.schema.supplier_schema import SupplierSchema
 

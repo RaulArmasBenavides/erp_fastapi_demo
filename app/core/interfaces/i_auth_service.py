@@ -1,5 +1,6 @@
 from typing import Protocol
-from app.core.models.user import User
+ 
+from app.domain.user import User
 from app.infrastructure.schema.auth_schema import SignIn, SignInResponse, SignUp
  
 class IAuthService(Protocol):

@@ -3,9 +3,10 @@ from typing import Optional
 
 from jose import jwt
 from passlib.context import CryptContext
-from app.core.models.config import configs
+from app.core.config import configs
 
-from app.core.models.user import User
+ 
+from app.domain.user import User
 from app.infrastructure.schema.auth_schema import SignIn, SignInResponse, SignUp
 
 

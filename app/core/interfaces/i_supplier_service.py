@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
-from app.core.models.supplier import SupplierModel
 
-
+from app.domain.supplier import SupplierModel
+ 
 class ISupplierService(ABC):
     @abstractmethod
     def add_supplier(self, supplier: SupplierModel,created_by: str) -> SupplierModel: ...

@@ -4,7 +4,7 @@ from fastapi.security import OAuth2PasswordBearer
 from app.core.container import Container
 from app.infrastructure.repository.user_repository import UserRepository
 from app.infrastructure.schema.user_schema import UserSchema
-from app.core.models.config import configs
+from app.core.config import configs
 from jose import jwt, JWTError
 from dependency_injector.wiring import Provide, inject
 
