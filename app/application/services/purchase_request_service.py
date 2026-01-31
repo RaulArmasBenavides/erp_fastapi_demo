@@ -5,7 +5,7 @@ from app.application.services.base_service import BaseService
 from app.core.interfaces.i_purchase_request_repository import IPurchaseRequestRepository
 from app.core.interfaces.i_purchase_request_service import IPurchaseRequestService
 
-from app.core.models.purchase_request import PurchaseRequestModel
+from app.domain.purchase_request import PurchaseRequestModel
 
 
 class PurchaseRequestService(BaseService, IPurchaseRequestService):

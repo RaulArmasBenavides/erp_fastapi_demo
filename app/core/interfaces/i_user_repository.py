@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 
-from app.core.models.user import User
+from app.domain.user import User
 
+ 
 
 class IUserRepository(ABC):
 

@@ -3,8 +3,9 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 from datetime import datetime
 
-from app.core.models.user import User
+from app.domain.user import User
 
+ 
 
 class UserResponse(BaseModel):
     id: int

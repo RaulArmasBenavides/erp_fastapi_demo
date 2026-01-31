@@ -1,5 +1,5 @@
-# app/api/v1/endpoints/auth.py
-from app.core.models.user import User
+ 
+from app.domain.user import User
 from app.infrastructure.schema.auth_schema import SignIn, SignInResponse, SignUp
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, HTTPException, status

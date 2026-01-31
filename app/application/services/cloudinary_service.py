@@ -11,7 +11,7 @@ from cloudinary.utils import cloudinary_url
 import aiofiles
 import asyncio
 from pathlib import Path
-from app.core.models.config import configs
+from app.core.config import configs
 
 
 class CloudinaryService:

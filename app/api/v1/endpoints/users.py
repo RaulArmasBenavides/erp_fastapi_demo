@@ -2,7 +2,8 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from app.application.dto.user_response import UserResponse
 from app.application.services.user_admin_service import UserAdminService
-from app.core.models.user import User
+ 
+from app.domain.user import User
 from dependency_injector.wiring import Provide, inject
 
 from app.api.security.roles import require_any_role

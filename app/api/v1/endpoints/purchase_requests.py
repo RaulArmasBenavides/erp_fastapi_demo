@@ -3,12 +3,12 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 from app.core.interfaces.i_purchase_request_service import IPurchaseRequestService
+from app.domain.purchase_request import PurchaseRequestModel
 from dependency_injector.wiring import Provide, inject
 
 from app.core.container import Container
  
-from app.core.models.purchase_request import PurchaseRequestModel
-
+ 
 
 router = APIRouter(
     prefix="/purchase-requests",

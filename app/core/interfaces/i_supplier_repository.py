@@ -1,8 +1,9 @@
 # app/core/interfaces/ISupplierRepository.py
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any
-from app.core.models.supplier import SupplierModel
 
+from app.domain.supplier import SupplierModel
+ 
 
 class ISupplierRepository(ABC):
     @abstractmethod

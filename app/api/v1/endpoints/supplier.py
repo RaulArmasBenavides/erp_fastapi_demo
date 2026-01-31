@@ -4,10 +4,11 @@ from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from app.api.security.roles import require_any_role
 from app.application.services.supplier_service import SupplierService
 from app.core.interfaces.i_supplier_service import ISupplierService
+from app.domain.supplier import SupplierModel
 from app.infrastructure.schema.user_schema import UserSchema
 from dependency_injector.wiring import Provide, inject
 from app.core.container import Container
-from app.core.models.supplier import SupplierModel
+ 
 
 
 router = APIRouter(

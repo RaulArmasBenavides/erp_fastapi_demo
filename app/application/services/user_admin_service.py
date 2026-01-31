@@ -1,7 +1,7 @@
 from passlib.context import CryptContext
 
 from app.core.interfaces.i_user_repository import IUserRepository
-from app.core.models.user import User
+from app.domain.user import User
 
 
 class UserAdminService:
